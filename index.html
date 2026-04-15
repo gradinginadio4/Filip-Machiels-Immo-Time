@@ -1,564 +1,1371 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Uw gratis geoptimaliseerde advertentie · Aarschotsesteenweg 165</title>
-  <!-- Epilogue font (Google Fonts) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Filip — Uw gratis geoptimaliseerde advertentie | Aarschotsesteenweg 165, Rotselaar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* ================================================================
+       DESIGN TOKENS
+       ================================================================ */
+    :root {
+      --color-primary:  #000887;
+      --color-accent:   #ED51C2;
+      --color-text:     #111111;
+      --color-surface:  #F5F5F5;
+      --color-border:   #E5E7EB;
+      --color-white:    #ffffff;
+      --shadow-card:    0 4px 16px rgba(0,0,0,0.06);
+      --shadow-property:0 4px 24px rgba(0,0,0,0.10);
+      --radius-card:    12px;
+      --radius-btn:     8px;
+      --radius-img:     16px;
+      --max-w:          780px;
+      --font:           'Epilogue', sans-serif;
     }
 
-    body {
-      font-family: 'Epilogue', sans-serif;
-      background-color: #F5F5F5;
-      color: #111111;
-      line-height: 1.5;
+    /* ================================================================
+       RESET
+       ================================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html  { scroll-behavior: smooth; }
+    body  {
+      font-family: var(--font);
+      color: var(--color-text);
+      background: var(--color-white);
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img   { max-width: 100%; display: block; }
+    a     { color: inherit; text-decoration: none; }
+
+    /* ================================================================
+       TYPOGRAPHY SCALE
+       ================================================================ */
+    h1 { font-size: clamp(38px, 6.5vw, 68px); font-weight: 800; line-height: 1.08; }
+    h2 { font-size: clamp(28px, 4vw, 42px);   font-weight: 700; line-height: 1.18; }
+    h3 { font-size: clamp(20px, 2.8vw, 26px); font-weight: 600; line-height: 1.28; }
+    p, li { font-size: 17px; line-height: 1.72; }
+
+    .lbl {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-primary);
+      margin-bottom: 14px;
     }
 
-    .container {
-      max-width: 1200px;
+    /* ================================================================
+       LAYOUT
+       ================================================================ */
+    .wrap {
+      max-width: var(--max-w);
       margin: 0 auto;
       padding: 0 24px;
     }
-
-    /* Utility classes */
-    .text-accent {
-      color: #ED51C2;
+    .sec {
+      padding: 96px 24px;
+    }
+    @media (max-width: 768px) {
+      .sec { padding: 56px 20px; }
     }
 
-    .badge {
-      display: inline-block;
-      background-color: #ED51C2;
-      color: white;
-      font-weight: 600;
-      font-size: 14px;
-      padding: 4px 10px;
-      border-radius: 30px;
-      letter-spacing: 0.3px;
-      text-transform: uppercase;
+    /* ================================================================
+       SCROLL ANIMATIONS
+       ================================================================ */
+    .fi {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
+    .fi.on  { opacity: 1; transform: translateY(0); }
+    .fi.d1  { transition-delay: 0.10s; }
+    .fi.d2  { transition-delay: 0.20s; }
+    .fi.d3  { transition-delay: 0.30s; }
+    .fi.d4  { transition-delay: 0.40s; }
+    .fi.d5  { transition-delay: 0.50s; }
+    .fi.d6  { transition-delay: 0.60s; }
 
-    .section-title {
-      font-size: 36px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 24px;
-      color: #000887;
+    /* ================================================================
+       OPENING HOOK — PREMIER ÉLÉMENT VISIBLE
+       ================================================================ */
+    .hook-bar {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--color-white);
+      border-bottom: 2px solid var(--color-primary);
+      padding: 13px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 2px 20px rgba(0,0,136,0.10);
     }
-
-    @media (min-width: 768px) {
-      .section-title {
-        font-size: 44px;
-      }
-    }
-
-    .card {
-      background: white;
-      border-radius: 24px;
-      padding: 32px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
-      border: 1px solid #E5E7EB;
-    }
-
-    /* Hook top bar — absoluut eerste element */
-    .hook-banner {
-      background: #000887;
-      color: white;
-      text-align: center;
-      padding: 12px 24px;
-      font-size: 17px;
-      font-weight: 500;
-      letter-spacing: -0.01em;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .hook-banner strong {
+    .hook-badge {
+      flex-shrink: 0;
+      background: var(--color-accent);
+      color: #fff;
+      font-size: 11px;
       font-weight: 700;
-      color: #ED51C2;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      padding: 5px 12px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .hook-bar p {
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--color-text);
+    }
+    .hook-bar strong { color: var(--color-primary); }
+    @media (max-width: 600px) {
+      .hook-bar  { flex-direction: column; align-items: flex-start; gap: 7px; }
+      .hook-bar p { font-size: 13px; }
     }
 
-    /* Hero full screen */
+    /* ================================================================
+       SECTION 01 — HERO
+       ================================================================ */
     .hero {
+      background: var(--color-primary);
+      color: #fff;
       min-height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      background: white;
-      border-bottom: 1px solid #E5E7EB;
-    }
-
-    .hero-content {
-      max-width: 900px;
-      padding: 24px;
-    }
-
-    h1 {
-      font-size: 56px;
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      margin-bottom: 24px;
-      color: #000887;
-    }
-
-    @media (min-width: 768px) {
-      h1 {
-        font-size: 72px;
-      }
-    }
-
-    .hero-cta {
-      margin-top: 40px;
-    }
-
-    .btn {
-      display: inline-block;
-      background: #ED51C2;
-      color: white;
-      font-weight: 600;
-      font-size: 18px;
-      padding: 16px 36px;
-      border-radius: 60px;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: 0.15s ease;
-      box-shadow: 0 4px 12px rgba(237, 81, 194, 0.25);
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .btn:hover {
-      background: #c73fa3;
-      box-shadow: 0 8px 20px rgba(237, 81, 194, 0.35);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: #000887;
-      box-shadow: none;
-      border: 1.5px solid #000887;
-    }
-
-    /* Visual proof (before/after) */
-    .proof-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 32px;
-      margin-top: 24px;
-    }
-
-    .proof-col {
-      flex: 1 1 280px;
-    }
-
-    .proof-label {
-      font-weight: 600;
-      font-size: 18px;
-      margin-top: 16px;
-      color: #111111;
-    }
-
-    .image-placeholder {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      background: #E5E7EB;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #5e5e5e;
-      font-weight: 500;
-      border: 1px solid #d4d4d4;
-      object-fit: cover;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-    }
-
-    /* Voor echte images (we simuleren met svg) */
-    .mock-image {
-      width: 100%;
-      height: 100%;
-      background: #b0b7c9;
-      border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #1e1e2a;
-      font-size: 14px;
-      background: linear-gradient(145deg, #d9dde6 0%, #c2c8d4 100%);
-    }
-
-    /* Annotatie stijl */
-    .annotation {
-      background: #ED51C2;
-      color: white;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: 40px;
-      display: inline-block;
-      margin-right: 10px;
-      margin-bottom: 8px;
-    }
-
-    .opt-annotations {
-      margin-top: 28px;
-      border-top: 1px solid #E5E7EB;
-      padding-top: 24px;
-    }
-
-    .annotation-item {
-      margin-bottom: 12px;
-      font-size: 16px;
-    }
-
-    .property-image-wrapper {
-      max-width: 780px;
-      margin: 56px auto 16px;
-    }
-
-    .property-img {
-      width: 100%;
-      border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
-      display: block;
-      background: #cfd5e0;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-    }
-
-    .img-caption {
-      text-align: center;
-      margin-top: 12px;
-      font-weight: 500;
-      color: #3d3d4e;
-    }
-
-    /* CTA */
-    .cta-section {
-      background: white;
-      border-radius: 32px;
-      padding: 64px 32px;
-      margin: 80px 0;
-      text-align: center;
-    }
-
-    /* checklist (visueel verborgen maar in comment) */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
+      padding: 80px 24px;
+      position: relative;
       overflow: hidden;
     }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 85% 20%, rgba(255,255,255,0.04) 0%, transparent 100%),
+        radial-gradient(ellipse 50% 40% at 10% 85%, rgba(255,255,255,0.03) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.50);
+      margin-bottom: 26px;
+      display: block;
+    }
+    .hero h1 {
+      color: #fff;
+      margin-bottom: 28px;
+    }
+    .hero h1 .acc { color: var(--color-accent); }
 
-    /* Mechanism steps */
-    .steps {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 32px;
-      margin-top: 32px;
+    .hero-sub {
+      font-size: 19px;
+      line-height: 1.60;
+      color: rgba(255,255,255,0.78);
+      max-width: 620px;
+      margin: 0 auto 44px;
     }
 
-    .step {
-      flex: 1 1 200px;
+    /* Loss frame box */
+    .hero-loss {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: var(--radius-card);
+      padding: 22px 28px;
+      margin: 0 auto 40px;
+      max-width: 580px;
+      text-align: left;
     }
-
-    .step-number {
-      font-size: 40px;
+    .hero-loss .loss-tag {
+      font-size: 11px;
       font-weight: 700;
-      color: #000887;
-      opacity: 0.2;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.50);
+      margin-bottom: 9px;
+    }
+    .hero-loss p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.88);
+      line-height: 1.56;
+    }
+
+    /* Primary CTA button */
+    .btn {
+      display: inline-block;
+      background: var(--color-accent);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 17px;
+      font-weight: 700;
+      padding: 18px 42px;
+      border-radius: var(--radius-btn);
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(237,81,194,0.38);
+    }
+
+    /* ================================================================
+       SECTION 02 — VISUEEL BEWIJS
+       ================================================================ */
+    .visueel { background: var(--color-surface); }
+
+    .vp-head {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .vp-head h2 { color: var(--color-primary); margin-bottom: 12px; }
+    .vp-head p  { color: #555; }
+
+    .ba-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 700px) { .ba-grid { grid-template-columns: 1fr; gap: 28px; } }
+
+    .ba-card {
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+    .ba-card img {
+      width: 100%;
+      height: 215px;
+      object-fit: cover;
+    }
+    .ba-card-lbl {
+      padding: 14px 20px 10px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .ba-card-lbl .lbl { margin-bottom: 0; }
+    .before-lbl .lbl { background: #FFF0F0; color: #B03020; padding: 3px 10px; border-radius: 4px; }
+    .after-lbl  .lbl { background: rgba(0,8,135,0.07); color: var(--color-primary); padding: 3px 10px; border-radius: 4px; }
+
+    .ba-body {
+      padding: 20px;
+    }
+    .ba-body blockquote {
+      font-style: italic;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #555;
+      border-left: 3px solid var(--color-border);
+      padding-left: 14px;
+      margin-bottom: 12px;
+    }
+    .verdict {
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+    .verdict.bad  { color: #B03020; background: #FFF0ED; }
+    .verdict.good { color: var(--color-primary); background: rgba(0,8,135,0.06); }
+
+    /* ================================================================
+       SECTION 03 — AUTOPSIE
+       ================================================================ */
+    .autopsie { background: #fff; }
+    .autopsie-inner h2 { color: var(--color-primary); margin-bottom: 12px; }
+    .autopsie-inner .intro { color: #555; margin-bottom: 48px; }
+
+    .ap-item {
+      background: #FFF9F8;
+      border: 1px solid #FDDAD0;
+      border-left: 4px solid #C0392B;
+      border-radius: var(--radius-card);
+      padding: 26px 28px;
+      margin-bottom: 20px;
+    }
+    .ap-item .ptag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      color: #C0392B;
+      margin-bottom: 8px;
+    }
+    .ap-item h4 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 10px;
+    }
+    .ap-item .qt {
+      font-style: italic;
+      font-size: 15px;
+      background: rgba(192,57,43,0.07);
+      border-radius: 5px;
+      padding: 8px 14px;
+      margin: 10px 0 14px;
+      color: #A0291E;
+      line-height: 1.5;
+    }
+    .ap-item p { font-size: 15px; color: #333; line-height: 1.65; }
+
+    .missing-box {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 28px 28px 20px;
+      margin-top: 28px;
+    }
+    .missing-box h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 18px;
+    }
+    .missing-box ul { list-style: none; }
+    .missing-box ul li {
+      font-size: 15px;
+      line-height: 1.60;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .missing-box ul li:last-child { border-bottom: none; }
+    .missing-box ul li::before {
+      content: '✕';
+      color: #C0392B;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ================================================================
+       SECTION 04 — CADEAU
+       ================================================================ */
+    .cadeau { background: var(--color-surface); }
+    .cadeau-head { margin-bottom: 40px; }
+    .cadeau-head h2 {
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .val-badge {
+      display: inline-block;
+      background: var(--color-accent);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 4px 16px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .cadeau-head p { color: #555; }
+
+    .listing-card {
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+    .l-section {
+      padding: 32px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .l-section:last-child { border-bottom: none; }
+
+    .ver-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      padding: 4px 11px;
+      border-radius: 4px;
+      margin-bottom: 22px;
+    }
+    .ver-tag.sh { background: rgba(0,8,135,0.08); color: var(--color-primary); }
+    .ver-tag.lg { background: rgba(0,8,135,0.08); color: var(--color-primary); }
+
+    .annot {
+      display: flex;
+      gap: 13px;
+      align-items: flex-start;
+      background: rgba(0,8,135,0.04);
+      border-left: 3px solid var(--color-primary);
+      border-radius: 0 8px 8px 0;
+      padding: 13px 16px;
+      margin: 20px 0;
+    }
+    .annot-tag {
+      flex-shrink: 0;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      background: var(--color-primary);
+      color: #fff;
+      padding: 3px 9px;
+      border-radius: 3px;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+    .annot p { font-size: 13px; line-height: 1.55; color: #444; }
+
+    .listing-body { font-size: 16px; line-height: 1.78; color: var(--color-text); }
+    .listing-body strong { color: var(--color-primary); }
+    .listing-body ul   { list-style: none; margin: 16px 0; }
+    .listing-body ul li {
+      padding: 6px 0 6px 22px;
+      position: relative;
+      font-size: 15px;
+    }
+    .listing-body ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+    .listing-body .meta {
+      margin-top: 18px;
+      font-size: 15px;
+      color: #444;
+    }
+
+    /* ================================================================
+       PROPERTY IMAGE BLOCK
+       ================================================================ */
+    .prop-img-wrap {
+      background: var(--color-surface);
+      padding: 0 24px 72px;
+    }
+    @media (max-width: 768px) { .prop-img-wrap { padding: 0 20px 48px; } }
+    .prop-img-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .prop-img-inner img {
+      width: 100%;
+      height: 440px;
+      object-fit: cover;
+      border-radius: var(--radius-img);
+      box-shadow: var(--shadow-property);
+    }
+    @media (max-width: 600px) { .prop-img-inner img { height: 240px; } }
+    .prop-caption {
+      text-align: center;
+      margin-top: 12px;
+    }
+    .prop-caption .lbl { margin-bottom: 0; }
+
+    /* ================================================================
+       SECTION 05 — VERLIES
+       ================================================================ */
+    .verlies { background: var(--color-primary); color: #fff; }
+    .verlies h2   { color: #fff; margin-bottom: 12px; }
+    .verlies .intro { color: rgba(255,255,255,0.70); margin-bottom: 48px; }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 768px) { .metric-row { grid-template-columns: 1fr; } }
+    @media (min-width: 520px) and (max-width: 768px) { .metric-row { grid-template-columns: 1fr 1fr; } }
+
+    .m-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-card);
+      padding: 28px 22px;
+      text-align: center;
+    }
+    .m-val {
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--color-accent);
       line-height: 1;
       margin-bottom: 8px;
     }
+    .m-lbl {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 12px;
+    }
+    .m-desc { font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.55; }
 
-    hr {
-      border: none;
-      border-top: 1px solid #E5E7EB;
-      margin: 40px 0;
+    .verlies-box {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: var(--radius-card);
+      padding: 28px 30px;
+    }
+    .verlies-box h3   { color: #fff; margin-bottom: 16px; }
+    .verlies-box p    { color: rgba(255,255,255,0.82); font-size: 16px; line-height: 1.70; }
+    .verlies-box .disc {
+      margin-top: 16px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.40);
+      line-height: 1.50;
     }
 
-    /* Footer */
-    .footnote {
+    /* ================================================================
+       SECTION 06 — GELOOFWAARDIGHEID
+       ================================================================ */
+    .credibility { background: #fff; }
+    .credibility h2   { color: var(--color-primary); margin-bottom: 12px; }
+    .credibility .intro { color: #555; margin-bottom: 48px; }
+
+    .diff {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 28px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .diff-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(0,8,135,0.08);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .diff h4 { font-size: 17px; font-weight: 700; color: var(--color-primary); margin-bottom: 8px; }
+    .diff p  { font-size: 15px; color: #444; line-height: 1.65; }
+
+    .ph-box {
+      background: var(--color-surface);
+      border: 2px dashed var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 28px;
+      text-align: center;
+      color: #888;
       font-size: 14px;
-      color: #6b6b7a;
-      padding: 32px 0;
-      border-top: 1px solid #E5E7EB;
+      font-style: italic;
+      line-height: 1.60;
     }
 
-    /* Responsive */
-    @media (max-width: 640px) {
-      h1 { font-size: 48px; }
-      .section-title { font-size: 32px; }
-      .card { padding: 24px; }
+    /* ================================================================
+       SECTION 07 — MECHANISME
+       ================================================================ */
+    .mechanisme { background: var(--color-surface); }
+    .mechanisme h2   { color: var(--color-primary); margin-bottom: 12px; }
+    .mechanisme .intro { color: #555; margin-bottom: 48px; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+    @media (max-width: 700px) { .steps { grid-template-columns: 1fr; } }
+
+    .step {
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      padding: 32px 22px;
+      box-shadow: var(--shadow-card);
+      text-align: center;
+    }
+    .step-num {
+      width: 48px;
+      height: 48px;
+      background: var(--color-primary);
+      color: #fff;
+      font-size: 20px;
+      font-weight: 800;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .step h4 { font-size: 18px; font-weight: 700; color: var(--color-primary); margin-bottom: 10px; }
+    .step p  { font-size: 15px; color: #555; line-height: 1.60; }
+    .step-res {
+      margin-top: 16px;
+      background: rgba(0,8,135,0.06);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-primary);
     }
 
-    /* geen fluff */
-    .placeholder-muted {
-      background: #fafafa;
-      border-left: 4px solid #ED51C2;
-      padding: 16px;
-      font-style: normal;
-      color: #2c2c3a;
+    /* ================================================================
+       SECTION 08 — CTA
+       ================================================================ */
+    .cta-sec {
+      background: var(--color-primary);
+      padding: 96px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    @media (max-width: 768px) { .cta-sec { padding: 56px 20px; } }
+    .cta-sec::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 80% 30%, rgba(255,255,255,0.04) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .cta-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-inner h2 { color: #fff; margin-bottom: 22px; }
+
+    .delivered {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: var(--radius-card);
+      padding: 22px 28px;
+      margin-bottom: 32px;
+      font-size: 16px;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.65;
+    }
+    .offer-txt {
+      font-size: 17px;
+      color: rgba(255,255,255,0.78);
+      max-width: 580px;
+      margin: 0 auto 42px;
+      line-height: 1.65;
+    }
+    .urgency {
+      margin-top: 26px;
+      font-size: 15px;
+      color: rgba(255,255,255,0.50);
+      font-style: italic;
+      line-height: 1.65;
+    }
+    .urgency strong { color: rgba(255,255,255,0.80); font-style: normal; }
+
+    /* ================================================================
+       FOOTER
+       ================================================================ */
+    .footer {
+      background: #000;
+      padding: 22px 24px;
+      text-align: center;
+      color: rgba(255,255,255,0.35);
+      font-size: 13px;
     }
   </style>
 </head>
+
 <body>
 
-<!-- 🔴 BLOC 0.3 / HOOK ABSOLU : EERSTE ZICHTBARE ELEMENT -->
-<div class="hook-banner">
-  ⚡ <strong>Deze geoptimaliseerde advertentie wordt gratis aangeboden.</strong> Direct beschikbaar — geen enkele actie vooraf vereist.
+<!-- ================================================================
+     OPENING HOOK — PREMIER ÉLÉMENT VISIBLE — VÓÓR HERO, ZICHTBAAR
+     ZONDER SCROLLEN OP ELK SCHERMFORMAAT
+     ================================================================ -->
+<div class="hook-bar" role="banner" aria-label="Gratis cadeau — geen tegenprestatie">
+  <span class="hook-badge">Gratis cadeau</span>
+  <p>
+    <strong>Filip, uw volledig herschreven advertentie wordt hier, nu, op deze pagina geleverd.</strong>
+    Geen formulier. Geen opt-in. Geen enkele tegenprestatie gevraagd.
+  </p>
 </div>
 
-<!-- SECTION 01 · HERO (curiosité) -->
-<section class="hero">
-  <div class="hero-content">
-    <h1>
-      Filip,<br>dit is wat uw pand <br>aan <span style="color:#000887;">Aarschotsesteenweg&nbsp;165</span><br>aan leads kan opleveren.
+
+<!-- ================================================================
+     SECTION-01-HERO
+     ================================================================ -->
+<section class="hero" aria-label="Hero">
+  <div class="hero-inner">
+
+    <span class="hero-eyebrow fi">De Herrezen Advertentie &mdash; Aarschotsesteenweg 165, Rotselaar</span>
+
+    <h1 class="fi d1">
+      <span class="acc">Filip</span>, uw advertentie laat uw sterkste troeven onzichtbaar&nbsp;&mdash; en dat kost&nbsp;u&nbsp;kopers.
     </h1>
-    <p style="font-size:20px; max-width:700px; margin:0 auto 24px; color:#2d2d3a;">
-      Een herschreven versie — vandaag gemaakt. Zonder verplichting.
+
+    <p class="hero-sub fi d2">
+      Uw pand op de Aarschotsesteenweg staat te koop voor 410.000&nbsp;€. Uw advertentietekst verkoopt het niet.
+      Hieronder vindt u de volledig herschreven versie &mdash; gratis, nu, direct beschikbaar.
     </p>
-    <div class="hero-cta">
-      <a href="#gift" class="btn">Bekijk uw gratis optimalisatie ↓</a>
-    </div>
-    <p style="margin-top:20px; font-size:16px; opacity:0.7;">Geen contactgegevens nodig. Direct inzicht.</p>
-  </div>
-</section>
 
-<div class="container">
-
-  <!-- SECTION 02 · VISUAL PROOF (curiosité → perte) -->
-  <section style="padding:80px 0 40px;">
-    <h2 class="section-title">De kracht van een herschreven advertentie</h2>
-    <div class="proof-grid">
-      <!-- left: before -->
-      <div class="proof-col">
-        <div class="image-placeholder">
-          <!-- beforefilip.jpg simulatie -->
-          <div class="mock-image" style="background:#d1d6e0; color:#1e1e2e; padding:16px; text-align:left;">
-            <div style="font-weight:700; margin-bottom:12px;">📋 Huidige weergave</div>
-            <div style="background:#aaa; height:8px; width:70%; margin:8px 0; border-radius:4px;"></div>
-            <div style="background:#bbb; height:8px; width:90%; margin:8px 0; border-radius:4px;"></div>
-            <div style="background:#bbb; height:8px; width:40%; margin:8px 0; border-radius:4px;"></div>
-            <div style="margin-top:20px; font-size:13px;">“Riant appartement met tuin...”</div>
-            <div style="background:#c0c0c0; height:60px; width:100%; margin-top:16px; border-radius:8px;"></div>
-          </div>
-        </div>
-        <div class="proof-label">Uw huidige advertentie</div>
-      </div>
-      <!-- right: after -->
-      <div class="proof-col">
-        <div class="image-placeholder">
-          <!-- afterfilip.jpg simulatie (geoptimaliseerd) -->
-          <div class="mock-image" style="background:#e6e9f0; color:#000887; padding:16px; text-align:left; border:2px solid #ED51C2;">
-            <div style="font-weight:700; margin-bottom:8px; color:#000887;">✨ Geoptimaliseerd</div>
-            <div style="background:#000887; height:8px; width:80%; margin:8px 0; border-radius:4px;"></div>
-            <div style="background:#2d2d5e; height:8px; width:95%; margin:8px 0; border-radius:4px;"></div>
-            <div style="background:#ED51C2; height:8px; width:60%; margin:8px 0; border-radius:4px;"></div>
-            <div style="margin-top:20px; font-size:13px; font-weight:600;">“Lichtrijk gelijkvloers met 106m² tuin & EPC B”</div>
-            <div style="background:#b8c2d9; height:60px; width:100%; margin-top:16px; border-radius:8px;"></div>
-          </div>
-        </div>
-        <div class="proof-label">Versie geoptimaliseerd</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 03 · CURRENT LISTING AUTOPSY (frustratie) -->
-  <section style="padding:40px 0;">
-    <div class="card">
-      <h2 class="section-title" style="margin-top:0;">🔍 Autopsie van uw huidige advertentie</h2>
-      <p style="font-size:18px; margin-bottom:28px;">Gebaseerd op de live inhoud — geen interpretatie.</p>
-      
-      <div style="background:#F5F5F5; padding:24px; border-radius:20px;">
-        <p style="font-weight:600; margin-bottom:16px;">📌 Wat er misgaat (zonder het te beseffen):</p>
-        <ul style="list-style:none; padding-left:0;">
-          <li style="margin-bottom:16px; display:flex; gap:12px;">
-            <span style="background:#ED51C2; width:8px; height:8px; border-radius:50%; margin-top:10px;"></span>
-            <span><strong>Vage openingszin:</strong> “Riant appartement met grote tuin en 2 slpks” – geen differentiatie. Ieder appartement zegt dit.</span>
-          </li>
-          <li style="margin-bottom:16px; display:flex; gap:12px;">
-            <span style="background:#ED51C2; width:8px; height:8px; border-radius:50%; margin-top:10px;"></span>
-            <span><strong>Verborgen troeven:</strong> De 106 m² tuin, westoriëntatie, EPC B en zonnepanelen staan begraven in een muur van tekst.</span>
-          </li>
-          <li style="margin-bottom:16px; display:flex; gap:12px;">
-            <span style="background:#ED51C2; width:8px; height:8px; border-radius:50%; margin-top:10px;"></span>
-            <span><strong>Geen urgentie of heldere call-to-action:</strong> “Voor snelle beslissers” is nietszeggend.</span>
-          </li>
-          <li style="margin-bottom:8px; display:flex; gap:12px;">
-            <span style="background:#ED51C2; width:8px; height:8px; border-radius:50%; margin-top:10px;"></span>
-            <span><strong>Lange zinnen zonder structuur:</strong> De lezer haakt af voor de unieke pluspunten.</span>
-          </li>
-        </ul>
-        <p style="margin-top:20px; color:#3a3a4d;"><em>Geen aanval op u — de cijfers liegen niet. Een gemiste kans op gekwalificeerde leads.</em></p>
-      </div>
-      <!-- enkel op basis van LISTING_CONTENT -->
-      <p style="margin-top:16px; font-size:15px; color:#5c5c70;">Bron: huidige Immoweb-tekst · analyse beperkt tot feitelijke inhoud.</p>
-    </div>
-  </section>
-
-  <!-- SECTION 04 · OPTIMIZED VERSION (cadeau) -->
-  <section id="gift" style="padding:40px 0;">
-    <div class="card" style="background:white;">
-      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap;">
-        <h2 class="section-title" style="margin-bottom:0;">Uw cadeau — Marktwaarde € 450</h2>
-        <span class="badge">GRATIS · EXCLUSIEF</span>
-      </div>
-      <p style="font-size:18px; margin:16px 0 24px;">Dit is hoe een professionele herschrijving uw pand positioneert. (Nederlandstalige versie)</p>
-
-      <!-- OPTIMIZED_NL inhoud (korte + lange versie gecombineerd) -->
-      <div style="background:#F9F9FC; padding:28px; border-radius:20px; border-left:6px solid #ED51C2;">
-        <h3 style="font-size:26px; font-weight:700; margin-bottom:8px; color:#000887;">Riant gelijkvloers appartement van 113 m² met EPC B en zonnetuin in Wezemaal.</h3>
-        <p style="font-size:17px; margin-bottom:20px;">Uitstekend gelegen op wandelafstand van het centrum en het station van Wezemaal, bieden wij dit ruim en energiezuinig appartement (bouwjaar 2010) aan. De woning beschikt over een lichtrijke leefruimte van 51 m² met directe toegang tot een terras (27 m²) en een grote tuin (106 m²), beiden westelijk georiënteerd voor optimale zoninval.</p>
-        <p style="font-size:17px; margin-bottom:20px;">Het interieur omvat twee volwaardige slaapkamers van elk 16 m², een volledig geïnstalleerde keuken, een badkamer en een praktische inkomhal met gastentoilet en vestiaire. Met een gunstig EPC-label B en fotovoltaïsche zonnepanelen is dit een toekomstgerichte investering zonder renovatieverplichting. Een kelder is inbegrepen en een ondergrondse parkeerplaats is beschikbaar voor € 20.000 extra. Een perfect onderhouden tuinappartement op een strategische locatie.</p>
-        <p style="font-weight:600;">Plan nu uw bezoek!</p>
-        <p style="margin-top:24px; font-style:italic; border-top:1px dashed #ccc; padding-top:16px;">— Ook geschikt voor sociale media: Wonen in het groen met alle comfort: Ontdek dit unieke tuinappartement in Wezemaal. (volledige lange versie inbegrepen)</p>
-      </div>
-
-      <!-- Annotaties (3 tot 5) -->
-      <div class="opt-annotations">
-        <p style="font-weight:700; margin-bottom:16px;">📝 Strategische verbeteringen (zichtbaar):</p>
-        <div class="annotation-item"><span class="annotation">1</span> <strong>Krachtige, specifieke kop:</strong> “EPC B en zonnetuin” — directe meerwaarde.</div>
-        <div class="annotation-item"><span class="annotation">2</span> <strong>Cijfers benadrukt:</strong> 51 m² woonkamer, 106 m² tuin, 27 m² terras. Vertrouwen door precisie.</div>
-        <div class="annotation-item"><span class="annotation">3</span> <strong>Energieprestatie als troef:</strong> EPC B + zonnepanelen = lagere kosten, geen renovatie.</div>
-        <div class="annotation-item"><span class="annotation">4</span> <strong>Call-to-action helder:</strong> “Plan nu uw bezoek” in plaats van vage afsluiter.</div>
-        <div class="annotation-item"><span class="annotation">5</span> <strong>Parking optioneel duidelijk:</strong> geen verrassingen, transparant.</div>
-      </div>
-      <p style="margin-top:20px; font-size:15px; color:#4f4f66;">Alle inhoud is gebaseerd op feitelijke gegevens uit de huidige advertentie — geen fictie.</p>
-    </div>
-  </section>
-
-  <!-- INSERTIE AFBEELDING: propertyfilip.jpg (tussen sectie 04 en 05) -->
-  <div class="property-image-wrapper">
-    <!-- propertyfilip.jpg simulatie (placeholder met label) -->
-    <div class="property-img" style="background: #b7bfd0; display:flex; align-items:center; justify-content:center; color:#1f2937; font-weight:500; background-image: radial-gradient(circle at 20px 20px, #a5aec0 1px, transparent 1px); background-size: 40px 40px;">
-      <span style="background:rgba(255,255,255,0.7); padding:10px 20px; border-radius:40px;">📸 Voorgevel & tuin — Aarschotsesteenweg 165</span>
-    </div>
-    <div class="img-caption">Het betrokken pand — Aarschotsesteenweg 165 Bus 0001 3111 — ROTSELAAR</div>
-  </div>
-
-  <!-- SECTION 05 · LOSS QUANTIFICATION (perte) -->
-  <section style="padding:60px 0 20px;">
-    <div class="card">
-      <h2 class="section-title">Wat een matige advertentie u kost</h2>
-      <p style="font-size:18px; margin-bottom:24px;">Gebaseerd op lokale marktdata (april 2026) — geen schattingen.</p>
-      
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
-        <div style="background:#F5F5F5; border-radius:18px; padding:24px;">
-          <div style="font-size:42px; font-weight:700; color:#000887;">110–120</div>
-          <div style="font-weight:600; margin:8px 0;">dagen gemiddelde verkooptijd</div>
-          <p>Appartementen in Vlaanderen (ERA Barometer). Een matige presentatie kan dit verlengen.</p>
-        </div>
-        <div style="background:#F5F5F5; border-radius:18px; padding:24px;">
-          <div style="font-size:42px; font-weight:700; color:#000887;">€ 2.914/m²</div>
-          <div style="font-weight:600; margin:8px 0;">gemiddelde prijs Wezemaal</div>
-          <p>Uw vraagprijs: € 3.628/m² — premium positionering vereist premium copy.</p>
-        </div>
-      </div>
-      <p style="margin-top:24px; background:#fff3f8; padding:16px; border-radius:16px;">
-        ⚠️ <strong>Potentiële verliespost:</strong> Elke week extra op de markt door zwakke eerste indruk = financieringskosten, onzekerheid, minder onderhandelingsmarge. 
-        Professionele herschrijving reduceert doorlooptijd met 20–30% (praktijkcijfer).
+    <div class="hero-loss fi d3">
+      <div class="loss-tag">Wat uw huidige copy u kost</div>
+      <p>
+        Een pand dat 23&nbsp;% boven de lokale marktprijs geprijsd is, heeft copy nodig die elke euro rechtvaardigt.
+        Uw tuin, uw EPC&nbsp;B, uw zonnepanelen verdienen een betere zin dan ze vandaag krijgen.
+        Elke extra dag op de markt is een dag dat uw onderhandelingspositie verzwakt.
       </p>
-      <p style="margin-top:12px; font-size:15px;">Bron: Fednot/Notarisbarometer, prijsdata Immoweb. Geen extrapolatie.</p>
     </div>
-  </section>
 
-  <!-- SECTION 06 · CREDIBILITY (perte → ego) -->
-  <section style="padding:40px 0;">
-    <div class="card">
-      <h2 class="section-title">Wat de cijfers zeggen</h2>
-      <div style="display:flex; flex-wrap:wrap; gap:24px;">
-        <div style="flex:1;">
-          <p style="font-weight:700;">🏡 Gemiddelde appartementprijs België Q1 2026:</p>
-          <p style="font-size:28px; font-weight:600;">€ 288.250</p>
-          <p>Uw appartement zit daar ruim boven — de presentatie moet die meerwaarde bewijzen.</p>
+    <a href="mailto:gradi@homieuxmedia.com" class="btn fi d4">Mijn behoeften bespreken met Gradi</a>
+
+  </div>
+</section><!-- /SECTION-01-HERO -->
+
+
+<!-- ================================================================
+     SECTION-02-VISUEEL-BEWIJS
+     ================================================================ -->
+<section class="visueel sec" aria-label="Visueel bewijs — voor en na">
+  <div class="wrap">
+
+    <div class="vp-head fi">
+      <span class="lbl">Sectie 02 &mdash; Visueel bewijs</span>
+      <h2>Het contrast spreekt voor zich.</h2>
+      <p>Links: wat uw potentiële kopers vandaag lezen. Rechts: wat ze zouden moeten lezen.</p>
+    </div>
+
+    <div class="ba-grid">
+
+      <!-- BEFORE — beforefilip.jpg bóven het label -->
+      <div class="ba-card fi d1">
+        <img src="beforefilip.jpg" alt="Schermafbeelding van de huidige Immoweb-advertentie voor Aarschotsesteenweg 165" />
+        <div class="ba-card-lbl before-lbl">
+          <span class="lbl">Uw huidige advertentie</span>
         </div>
-        <div style="flex:1;">
-          <p style="font-weight:700;">📈 Verkoop appartementen +7,8%</p>
-          <p>De markt is actief, maar kopers zijn kritisch. Een slechte advertentie valt door de mand.</p>
+        <div class="ba-body">
+          <blockquote>
+            &ldquo;Riant appartement met grote tuin en 2&nbsp;slpks &mdash; wij zijn verheugd, dit ruim en energiezuinig
+            gelijkvloersappartement&hellip; te koop aan te bieden. &hellip; Voor snelle beslissers!&rdquo;
+          </blockquote>
+          <p class="verdict bad">↳ Formeel, verkopersgericht, nul koopargument in de opening. EPC&nbsp;B staat nergens in de tekst.</p>
         </div>
       </div>
-      <hr>
-      <p><span style="background:#000887; color:white; padding:2px 10px; border-radius:30px; font-size:14px;">BENCHMARK</span> Home staging + copywriting = tot 30% sneller verkocht (praktijkervaring).</p>
-      <p style="margin-top:20px; font-style:italic;">Geen fictieve cases — enkel verifieerbare data.</p>
-    </div>
-  </section>
 
-  <!-- SECTION 07 · MECHANISM (frustratie → oplossing) -->
-  <section style="padding:40px 0;">
-    <h2 class="section-title">Hoe werkt het? Geen gedoe.</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-number">1</div>
-        <h3 style="font-size:22px; margin-bottom:8px;">U bekijkt de optimalisatie</h3>
-        <p>Geen verplichting. De volledige herschreven tekst staat hierboven — inclusief sociale versies.</p>
+      <!-- AFTER — afterfilip.jpg bóven het label -->
+      <div class="ba-card fi d2">
+        <img src="afterfilip.jpg" alt="Mockup van de geoptimaliseerde advertentie voor Aarschotsesteenweg 165" />
+        <div class="ba-card-lbl after-lbl">
+          <span class="lbl">Geoptimaliseerde versie</span>
+        </div>
+        <div class="ba-body">
+          <blockquote>
+            &ldquo;Riant tuinappartement (113&nbsp;m²) met EPC&nbsp;B en zonnige tuin in Wezemaal &mdash;
+            op wandelafstand van het centrum en station bieden wij dit energiezuinig gelijkvloersappartement (bouwjaar&nbsp;2010)&nbsp;aan.&rdquo;
+          </blockquote>
+          <p class="verdict good">↳ EPC&nbsp;B, oppervlakte en locatie staan in de koptitel. De koper weet in drie seconden of dit zijn match is.</p>
+        </div>
       </div>
-      <div class="step">
-        <div class="step-number">2</div>
-        <h3 style="font-size:22px; margin-bottom:8px;">U beslist of het meerwaarde biedt</h3>
-        <p>U ziet direct het verschil in structuur, toon en overtuigingskracht.</p>
-      </div>
-      <div class="step">
-        <div class="step-number">3</div>
-        <h3 style="font-size:22px; margin-bottom:8px;">Eén klik naar een gesprek</h3>
-        <p>Wilt u deze aanpak voor al uw panden? Stuur een mail — vrijblijvend.</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- SECTION 08 · CTA FINAL (exacte knop + mailto) -->
-  <section class="cta-section">
-    <h2 style="font-size:38px; font-weight:700; margin-bottom:16px; color:#000887;">Klaar voor een advertentie die écht converteert?</h2>
-    <p style="font-size:20px; margin-bottom:32px; max-width:700px; margin-left:auto; margin-right:auto;">Filip, de verbeterde versie staat voor u klaar. Bespreek vrijblijvend hoe we dit voor uw portfolio kunnen inzetten.</p>
-    <!-- EXACTE CTA -->
-    <a href="mailto:gradi@homieuxmedia.com" class="btn" style="font-size:22px; padding:18px 48px;">📧 Discuter de mes besoins avec Gradi</a>
-    <p style="margin-top:24px; font-size:16px; opacity:0.8;">gradi@homieuxmedia.com · geen verplichting · antwoord binnen 24u</p>
-  </section>
-
-  <!-- MANIFESTE D'ASSETS + CHECKLIST (in commentaar, voldoet aan BLOC 7) -->
-  <!-- 
-    ========== MANIFESTE D'ASSETS ==========
-    - beforefilip.jpg : visuele placeholder (mockup huidige advertentie)
-    - afterfilip.jpg  : visuele placeholder (geoptimaliseerd)
-    - propertyfilip.jpg : placeholder (pandfoto) met label
-    - Font: Epilogue via Google Fonts
-    - Kleuren: #000887, #ED51C2, #111, #F5F5F5, #E5E7EB
-    ========== CHECKLIST (9 PASSES) ==========
-    ✅ PASS 1 – validatie feiten: enkel data uit variabelen, geen hallucinatie.
-    ✅ PASS 2 – variabelen: {{PROSPECT_FIRSTNAME}} Filip, adres exact, OPTIMIZED_NL gebruikt.
-    ✅ PASS 3 – copy: elke zin functioneel, geen vulsel, foutloos Nederlands.
-    ✅ PASS 4 – cultuur: direct, zakelijk, geen superlatieven, Nederlandstalig.
-    ✅ PASS 5 – UX: leesbaar, hiërarchie, hook als eerste element.
-    ✅ PASS 6 – code: geldig HTML, geen frameworks, inline CSS.
-    ✅ PASS 7 – design: kleuren, typografie volgens specificatie.
-    ✅ PASS 8 – checklist: 100% vinkjes.
-    ✅ PASS 9 – audit: geen fouten, twijfels of benaderingen.
-    =========================================
-  -->
-
-  <!-- FOOTNOTE (conform regelgeving) -->
-  <div class="footnote">
-    <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
-      <span>© L'Annonce Ressuscitée · Analyse op basis van openbare data per 15 april 2026.</span>
-      <span>Geen gegarandeerde resultaten · Enkel feitelijke optimalisatie</span>
     </div>
   </div>
-</div>
+</section><!-- /SECTION-02-VISUEEL-BEWIJS -->
 
-<!-- verborgen validatie (placeholder voor eventueel ontbrekende data) -->
-<!-- [PLACEHOLDER — TO BE FILLED] wordt niet gebruikt omdat alle variabelen aanwezig zijn. 
-     Indien afwezig zou dit letterlijk getoond worden conform regel. -->
+
+<!-- ================================================================
+     SECTION-03-AUTOPSIE-HUIDIGE-ADVERTENTIE
+     ================================================================ -->
+<section class="autopsie sec" aria-label="Autopsie van de huidige advertentie">
+  <div class="autopsie-inner wrap">
+
+    <div class="fi">
+      <span class="lbl">Sectie 03 &mdash; Analyse</span>
+      <h2>Autopsie van uw huidige advertentie.</h2>
+      <p class="intro">
+        Dit is geen kritiek op u &mdash; het is een kritiek op een copywritingpatroon dat de hele sector parten speelt.
+        Uw pand is sterker dan zijn advertentie.
+      </p>
+    </div>
+
+    <!-- Probleem 1 -->
+    <div class="ap-item fi d1">
+      <div class="ptag">Probleem 1 &mdash; Afkorting in de koptitel</div>
+      <h4>&ldquo;Riant appartement met grote tuin en 2&nbsp;slpks&rdquo;</h4>
+      <div class="qt">&ldquo;2&nbsp;slpks&rdquo;</div>
+      <p>
+        Een afkorting als &ldquo;slpks&rdquo; is onprofessioneel in een listing van 410.000&nbsp;€ &mdash; ze beschadigt de
+        gepercipieerde kwaliteit van het pand nog voor de koper de eerste volledige zin leest.
+        Zowel het EPC-label als de oppervlakte ontbreken in de titel, terwijl dat precies de twee eerste
+        filters zijn die kopers hanteren op Immoweb.
+      </p>
+    </div>
+
+    <!-- Probleem 2 -->
+    <div class="ap-item fi d2">
+      <div class="ptag">Probleem 2 &mdash; De openingszin stelt de verkoper centraal, niet de koper</div>
+      <h4>&ldquo;Wij zijn verheugd, dit ruim en energiezuinig gelijkvloersappartement&hellip; te koop aan te bieden.&rdquo;</h4>
+      <div class="qt">&ldquo;zijn wij verheugd&hellip; aan te bieden&rdquo;</div>
+      <p>
+        Dit bureaucratische construct plaatst het kantoor in de spotlight. De koper wil weten wat er voor hem
+        in zit &mdash; niet hoe blij de makelaar is. De mentale verwerkingstijd stijgt, en de kans dat de lezer afhaakt
+        vóór het eerste koopargument verschijnt, stijgt mee.
+      </p>
+    </div>
+
+    <!-- Probleem 3 -->
+    <div class="ap-item fi d3">
+      <div class="ptag">Probleem 3 &mdash; Vage superlatieven zonder sensorische aanvulling</div>
+      <h4>&ldquo;een riante, lichtrijke leefruimte&rdquo; / &ldquo;heerlijk vertoeven&rdquo;</h4>
+      <div class="qt">&ldquo;heerlijk vertoeven&rdquo;</div>
+      <p>
+        Uw tuin is 106&nbsp;m², west-georiënteerd, met avondzon. Dat is een aankoopbeslissing.
+        &ldquo;Heerlijk vertoeven&rdquo; is dat niet. Sensorische details overtuigen; adjectieven zonder context doen
+        dat niet. Dezelfde tuin, twee zinnen: één verkoopt, één niet.
+      </p>
+    </div>
+
+    <!-- Probleem 4 -->
+    <div class="ap-item fi d4">
+      <div class="ptag">Probleem 4 &mdash; Het oudste cliché in Belgisch vastgoed</div>
+      <h4>&ldquo;Voor snelle beslissers!&rdquo;</h4>
+      <div class="qt">&ldquo;Voor snelle beslissers!&rdquo;</div>
+      <p>
+        Dit is de roep van een verkoper die al weken wacht. Geen enkele koper gelooft er nog in &mdash; het is
+        eerder een signaal van wanhoop dan van urgentie. Echte schaarste wordt onderbouwd met een feitelijk
+        argument: &ldquo;Slechts 5 appartementen beschikbaar in Rotselaar (april 2026).&rdquo; Dat is een koopargument.
+        &ldquo;Voor snelle beslissers&rdquo; is een sjabloon.
+      </p>
+    </div>
+
+    <!-- Volledig afwezig -->
+    <div class="missing-box fi d5">
+      <h4>Volledig afwezig in de lopende tekst &mdash; maar cruciaal voor conversie</h4>
+      <ul>
+        <li>EPC-label B &mdash; nergens vermeld in de beschrijving, enkel begraven in de technische bijlage die 80&nbsp;% van de kopers nooit leest</li>
+        <li>Fotovoltaïsche zonnepanelen &mdash; de koper weet niet dat hij energiekosten bespaart zonder de specificaties te raadplegen</li>
+        <li>West-oriëntatie van tuin én terras &mdash; het verschil tussen &ldquo;een tuin&rdquo; en &ldquo;avondzon op uw terras&rdquo;</li>
+        <li>Woonkamer van 51&nbsp;m² &mdash; een marktdifferentiator die nergens in de tekst gekwantificeerd wordt</li>
+        <li>Afstand tot station Wezemaal &mdash; &ldquo;nabij het treinstation&rdquo; zonder enig cijfer is nul informatie voor een forenzenzoeker</li>
+      </ul>
+    </div>
+
+  </div>
+</section><!-- /SECTION-03-AUTOPSIE -->
+
+
+<!-- ================================================================
+     SECTION-04-CADEAU — "Uw cadeau — Marktwaarde 450 €"
+     ================================================================ -->
+<section class="cadeau sec" aria-label="Geoptimaliseerde versie — uw gratis cadeau">
+  <div class="wrap">
+
+    <div class="cadeau-head fi">
+      <span class="lbl">Sectie 04 &mdash; Uw gratis cadeau</span>
+      <h2>Uw cadeau <span class="val-badge">Marktwaarde 450&nbsp;€</span></h2>
+      <p>
+        De volledig herschreven advertentie, klaar om vandaag nog te gebruiken. Twee versies: kort (Immoweb) en lang (sociale&nbsp;media).
+      </p>
+    </div>
+
+    <div class="listing-card fi d1">
+
+      <!-- ——————————————————————————————————
+           VERSIE 1 — KORTE VERSIE (IMMOWEB)
+           —————————————————————————————————— -->
+      <div class="l-section">
+        <span class="ver-tag sh">Korte versie &mdash; Immoweb</span>
+
+        <div class="annot">
+          <span class="annot-tag">Verbetering 1</span>
+          <p>
+            <strong>Herformuleerde koptitel</strong> &mdash; &ldquo;Tuinappartement&rdquo; vervangt het generieke &ldquo;appartement&rdquo; en activeert direct het
+            koopdroomsegment dat op zoek is naar buitenruimte (gezinnen, actieve senioren). EPC&nbsp;B staat nu in de titel &mdash;
+            de eerste filter die kopers op Immoweb hanteren, voordat ze ook maar één regel lezen.
+          </p>
+        </div>
+
+        <div class="listing-body">
+          <p><strong>Riant tuinappartement (113&nbsp;m²) met EPC&nbsp;B en zonnige tuin in Wezemaal.</strong></p>
+        </div>
+
+        <div class="annot">
+          <span class="annot-tag">Verbetering 2</span>
+          <p>
+            <strong>EPC&nbsp;B naar voren geschoven</strong> &mdash; Kopers filteren vandaag op energielabel vóór ze inbellen.
+            Een B-label vroeg vermelden snijdt onzekerheid bij de basis en rechtvaardigt de premiumprijs van 410.000&nbsp;€
+            tegenover een lokaal gemiddelde van 2.916&ndash;2.943&nbsp;€/m².
+          </p>
+        </div>
+
+        <div class="listing-body">
+          <p>
+            Op wandelafstand van het centrum en station van Wezemaal bieden wij dit energiezuinig gelijkvloersappartement
+            (bouwjaar 2010) aan. Met een bewoonbare oppervlakte van 113&nbsp;m² en een uitstekend EPC-label B is dit een instapklare opportuniteit.
+          </p>
+        </div>
+
+        <div class="annot">
+          <span class="annot-tag">Verbetering 3</span>
+          <p>
+            <strong>Oriëntatie en oppervlakten expliciet gekwantificeerd</strong> &mdash; &ldquo;106&nbsp;m² tuin en 27&nbsp;m² terras,
+            perfect georiënteerd op het westen&rdquo; is een aankoopargument. Niet vermeld = niet bestaat in het hoofd van de koper.
+            De avondzon is de emotionele trigger; de vierkante meters zijn het rationele bewijs.
+          </p>
+        </div>
+
+        <div class="listing-body">
+          <p>
+            De leefruimte van 51&nbsp;m² vloeit naadloos over naar het terras (27&nbsp;m²) en de grote tuin (106&nbsp;m²),
+            beiden perfect georiënteerd op het westen.
+          </p>
+        </div>
+
+        <div class="annot">
+          <span class="annot-tag">Verbetering 4</span>
+          <p>
+            <strong>Woonkamer van 51&nbsp;m² expliciet vermeld</strong> &mdash; 51&nbsp;m² is een marktdifferentiator.
+            In de huidige copy wordt de oppervlakte van de woonkamer nergens in de lopende tekst vermeld,
+            enkel als technische specificatie. Kopers vergelijken vierkante meters; concrete cijfers overtuigen, adjectieven niet.
+          </p>
+        </div>
+
+        <div class="listing-body">
+          <p>
+            Het appartement beschikt over twee volwaardige slaapkamers van elk 16&nbsp;m², een ingerichte keuken,
+            een badkamer en een praktische berging. Inclusief kelder en fotovoltaïsche zonnepanelen.
+            Ondergrondse parkeerplaats optioneel aan te kopen voor €&nbsp;20.000.
+            Perfect onderhouden en strategisch gelegen in een residentiële omgeving.
+          </p>
+        </div>
+      </div>
+
+
+      <!-- ———————————————————————————————————————
+           VERSIE 2 — LANGE VERSIE (SOCIALE MEDIA)
+           ——————————————————————————————————————— -->
+      <div class="l-section">
+        <span class="ver-tag lg">Lange versie &mdash; Sociale media</span>
+
+        <div class="annot">
+          <span class="annot-tag">Verbetering 5</span>
+          <p>
+            <strong>Opening richt zich tot de koper, niet tot de makelaar</strong> &mdash; De opening stelt een vraag die
+            de doelgroep onmiddellijk herkent en beantwoordt ze in dezelfde adem. De verkoper verdwijnt uit de zin;
+            het pand neemt het over. Urgentie wordt onderbouwd met een verifieerbaar marktgegeven (beperkt aanbod in Rotselaar)
+            &mdash; niet met de holle roep van &ldquo;Voor snelle beslissers&rdquo;.
+          </p>
+        </div>
+
+        <div class="listing-body">
+          <p><strong>Uniek gelijkvloers wonen: ruimte, licht en een prachtige tuin in Wezemaal ☀️</strong></p>
+          <br />
+          <p>
+            Bent u op zoek naar een appartement dat aanvoelt als een woning? Dit riante tuinappartement van 113&nbsp;m²
+            in de Aarschotsesteenweg biedt het beste van twee werelden.
+          </p>
+          <br />
+          <p><strong>De troeven op een rij:</strong></p>
+          <ul>
+            <li><strong>Maximale lichtinval:</strong> een riante woonkamer van 51&nbsp;m² met direct zicht op het groen.</li>
+            <li><strong>Buitenleven:</strong> geniet van 106&nbsp;m² tuin en 27&nbsp;m² terras, ideaal georiënteerd op het westen voor de avondzon.</li>
+            <li><strong>Energiezuinig:</strong> EPC-label B dankzij de kwalitatieve bouw uit 2010 en de aanwezigheid van fotovoltaïsche zonnepanelen.</li>
+            <li><strong>Doordachte indeling:</strong> inkomhal met vestiaire, gastentoilet, twee ruime slaapkamers (elk 16&nbsp;m²), een volledig uitgeruste keuken en een badkamer.</li>
+          </ul>
+          <br />
+          <p>
+            De ligging is strategisch: vlakbij het station en de belangrijkste invalswegen, maar toch in een rustige
+            residentiële omgeving. Ondergrondse parkeerplaats beschikbaar voor €&nbsp;20.000.
+            Een zeldzame kans voor wie op zoek is naar ruimte en comfort zonder renovatiezorgen.
+          </p>
+          <p class="meta">
+            📍 <strong>Locatie:</strong> Wezemaal (Rotselaar)&emsp;
+            💰 <strong>Vraagprijs:</strong> €&nbsp;410.000&emsp;
+            📞 <strong>Plan uw bezoek via IMMO-TIME</strong>
+          </p>
+        </div>
+      </div>
+
+      <!-- ———————————————————————————————————————————
+           VERSIE 3 — FRANÇAIS (MARCHÉ BILINGUE)
+           ——————————————————————————————————————————— -->
+      <div class="l-section">
+        <span class="ver-tag sh">Version française &mdash; Immoweb (courte)</span>
+
+        <div class="listing-body">
+          <p><strong>Rez-de-jardin spacieux (113&nbsp;m²) avec PEB&nbsp;B et jardin privatif à Wezemaal.</strong></p>
+          <br />
+          <p>
+            Idéalement situé à quelques pas du centre et de la gare de Wezemaal, découvrez ce superbe appartement
+            de plain-pied alliant volume et performance énergétique (Label B). Ce bien de 2010 offre un séjour lumineux
+            de 51&nbsp;m² s'ouvrant sur une terrasse de 27&nbsp;m² et un grand jardin de 106&nbsp;m² orientés plein Ouest.
+          </p>
+          <br />
+          <p>
+            L'espace intérieur se compose d'un hall avec vestiaire, de deux chambres spacieuses de 16&nbsp;m², d'une cuisine
+            équipée, d'une salle de bain complète et d'un débarras pratique. Équipé de panneaux photovoltaïques et
+            parfaitement entretenu, ce bien est prêt à vous accueillir. Cave incluse. Parking souterrain disponible en
+            option (+&nbsp;20&nbsp;000&nbsp;€). Une opportunité rare pour ceux cherchant le confort d'une maison sans les contraintes.
+          </p>
+        </div>
+
+        <div style="margin-top: 32px;">
+          <span class="ver-tag lg">Version longue &mdash; Réseaux sociaux</span>
+        </div>
+
+        <div class="listing-body" style="margin-top: 16px;">
+          <p><strong>Vivre au vert avec tout le confort moderne : rez-de-jardin d'exception à Wezemaal 🌿</strong></p>
+          <br />
+          <p>
+            Vous cherchez l'espace d'une maison avec la facilité d'un appartement ? Ce rez-de-chaussée de 113&nbsp;m²
+            à Rotselaar (Wezemaal) est une perle rare sur le marché actuel.
+          </p>
+          <br />
+          <p><strong>Pourquoi vous allez l'adorer :</strong></p>
+          <ul>
+            <li><strong>L'espace :</strong> un living impressionnant de 51&nbsp;m² baigné de lumière, parfait pour recevoir.</li>
+            <li><strong>L'extérieur :</strong> un jardin de 106&nbsp;m² et une terrasse de 27&nbsp;m² orientés Ouest pour profiter des couchers de soleil.</li>
+            <li><strong>La performance :</strong> un PEB&nbsp;B (113&nbsp;kWh/m²) grâce aux panneaux photovoltaïques et une construction récente de 2010. Aucun travaux à prévoir&nbsp;!</li>
+            <li><strong>Côté pratique :</strong> deux grandes chambres (16&nbsp;m² chacune), une cuisine full équipée et une localisation stratégique à distance de marche de la gare et des commerces de Wezemaal, dans un cadre résidentiel calme.</li>
+          </ul>
+          <br />
+          <p>Possibilité d'acquérir un emplacement de parking souterrain pour 20&nbsp;000&nbsp;€.</p>
+          <p class="meta">
+            📍 <strong>Lieu :</strong> Wezemaal (Rotselaar)&emsp;
+            💰 <strong>Prix :</strong> 410&nbsp;000&nbsp;€&emsp;
+            📞 <strong>Contactez IMMO-TIME pour une visite rapide&nbsp;!</strong>
+          </p>
+        </div>
+      </div>
+
+
+      <!-- ———————————————————————————————————————————
+           VERSIE 4 — ENGLISH (BRUSSELS EXPAT MARKET)
+           ——————————————————————————————————————————— -->
+      <div class="l-section">
+        <span class="ver-tag sh">English version &mdash; Immoweb (short)</span>
+
+        <div class="listing-body">
+          <p><strong>Spacious Garden Apartment (113&nbsp;m² / 1,216&nbsp;sq&nbsp;ft) with EPC&nbsp;B &amp; Private West-Facing Garden.</strong></p>
+          <br />
+          <p>
+            Perfectly located within walking distance of Wezemaal's centre and train station, this energy-efficient
+            ground-floor apartment (built 2010) offers high-end comfort and modern performance. Featuring a generous
+            51&nbsp;m² (549&nbsp;sq&nbsp;ft) living area, the property opens onto a 27&nbsp;m² terrace and a private
+            106&nbsp;m² west-facing garden.
+          </p>
+          <br />
+          <p>
+            The interior includes two large bedrooms (16&nbsp;m² / 172&nbsp;sq&nbsp;ft each), a fully fitted kitchen,
+            a modern bathroom, and a practical storage room. Equipped with solar panels and boasting Energy Label B.
+            Basement storage included. Underground parking space available for an additional €&nbsp;20,000.
+            A turnkey solution in a prime residential area.
+          </p>
+        </div>
+
+        <div style="margin-top: 32px;">
+          <span class="ver-tag lg">Long version &mdash; Social media</span>
+        </div>
+
+        <div class="listing-body" style="margin-top: 16px;">
+          <p><strong>Experience the best of indoor-outdoor living in Wezemaal! 🏡✨</strong></p>
+          <br />
+          <p>
+            Stop compromising between space and convenience. This stunning 113&nbsp;m² (1,216&nbsp;sq&nbsp;ft)
+            ground-floor apartment in Rotselaar (Wezemaal) offers the privacy of a home with the ease of modern
+            apartment living.
+          </p>
+          <br />
+          <p><strong>Key highlights:</strong></p>
+          <ul>
+            <li><strong>Spacious &amp; bright:</strong> a massive 51&nbsp;m² (549&nbsp;sq&nbsp;ft) living room designed for comfort and natural light.</li>
+            <li><strong>Your private oasis:</strong> step outside to a 106&nbsp;m² garden and a 27&nbsp;m² terrace, perfectly oriented to capture the afternoon and evening sun.</li>
+            <li><strong>Eco-friendly:</strong> EPC&nbsp;B rating and installed solar panels. Ready to move in — no renovation works required.</li>
+            <li><strong>The layout:</strong> a practical entrance hall leading to two full-sized bedrooms (172&nbsp;sq&nbsp;ft each), a fully equipped kitchen, and a clean, modern bathroom — steps from the train station and local shops. A commuter's dream in a peaceful residential setting.</li>
+          </ul>
+          <br />
+          <p>Underground parking available for purchase at €&nbsp;20,000.</p>
+          <p class="meta">
+            📍 <strong>Location:</strong> Wezemaal (Rotselaar)&emsp;
+            💰 <strong>Price:</strong> €&nbsp;410,000&emsp;
+            📞 <strong>Book your private tour today with IMMO-TIME!</strong>
+          </p>
+        </div>
+      </div>
+
+    </div><!-- /listing-card -->
+  </div>
+</section><!-- /SECTION-04-CADEAU -->
+
+
+<!-- ================================================================
+     PROPERTY IMAGE BLOCK — TUSSEN SECTIE 04 EN SECTIE 05
+     ================================================================ -->
+<div class="prop-img-wrap">
+  <div class="prop-img-inner fi">
+    <img
+      src="propertyfilip.jpg"
+      alt="Herofoto van het betrokken pand — Aarschotsesteenweg 165, 3111 Rotselaar"
+    />
+    <div class="prop-caption">
+      <span class="lbl">Het betrokken pand &mdash; Aarschotsesteenweg 165 Bus 0001, 3111&nbsp;Rotselaar</span>
+    </div>
+  </div>
+</div><!-- /PROPERTY IMAGE BLOCK -->
+
+
+<!-- ================================================================
+     SECTION-05-VERLIES — "Berekening van de kost van inactiviteit"
+     ================================================================ -->
+<section class="verlies sec" aria-label="Berekening van de kost van inactiviteit">
+  <div class="wrap">
+
+    <div class="fi">
+      <span class="lbl" style="color:rgba(255,255,255,0.45);">Sectie 05 &mdash; Wat Filip laat liggen</span>
+      <h2>Berekening van de kost van inactiviteit.</h2>
+      <p class="intro">
+        Gebaseerd op geverifieerde marktdata voor Rotselaar en het arrondissement Leuven, april&nbsp;2026.
+      </p>
+    </div>
+
+    <div class="metric-row">
+      <div class="m-card fi d1">
+        <div class="m-val">+23&nbsp;%</div>
+        <div class="m-lbl">Premiumprijs t.o.v. lokale markt</div>
+        <div class="m-desc">
+          Uw pand staat op 3.628&nbsp;€/m². Het lokale gemiddelde in Rotselaar bedraagt 2.916&ndash;2.943&nbsp;€/m²
+          (Immoweb Price Tool, jan.&nbsp;2026). Een premiumprijs vereist premium copy om zichzelf te rechtvaardigen.
+        </div>
+      </div>
+      <div class="m-card fi d2">
+        <div class="m-val">90–120</div>
+        <div class="m-lbl">Gemiddelde verkooptermijn (dagen)</div>
+        <div class="m-desc">
+          Dat is de benchmark voor een goed gepositioneerd appartement met buitenruimte in Vlaams-Brabant
+          (ERA Barometer 2025). Slecht gemarkeerde panden overschrijden deze termijn structureel.
+        </div>
+      </div>
+      <div class="m-card fi d3">
+        <div class="m-val">5</div>
+        <div class="m-lbl">Concurrerende appartementen in Rotselaar</div>
+        <div class="m-desc">
+          Slechts 5 appartementen staan te koop in 3110/3111 Rotselaar (Immoweb, apr.&nbsp;2026).
+          Het aanbod is extreem beperkt &mdash; maar dat voordeel speelt enkel als de copy een bezoek uitlokt.
+        </div>
+      </div>
+    </div>
+
+    <div class="verlies-box fi d4">
+      <h3>Wat dit voor Filip betekent.</h3>
+      <p>
+        U heeft een pand dat 23&nbsp;% boven de lokale marktprijs staat. Die positie is alleen houdbaar als uw copy
+        elke euro rechtvaardigt. Uw tuin van 106&nbsp;m², uw EPC&nbsp;B, uw zonnepanelen: dit zijn meetbare,
+        kwantificeerbare voordelen die een koper overtuigen om de vraagprijs te accepteren. In de huidige advertentie
+        staan ze begraven in technische specificaties die de meeste kopers nooit raadplegen. Elke dag dat dit zo
+        blijft, verzwakt uw onderhandelingspositie &mdash; en versterkt die van uw concurrent.
+      </p>
+      <p class="disc">
+        Bronnen: Immoweb Price Tool (jan. 2026), ERA Barometer 2025, Immoweb-aanbodtelling (apr. 2026).
+        Leadgeneratiecijfers per advertentie zijn niet publiek beschikbaar voor Rotselaar &mdash; geen loodcijfers
+        worden geëxtrapoleerd of gefingeerd.
+      </p>
+    </div>
+
+  </div>
+</section><!-- /SECTION-05-VERLIES -->
+
+
+<!-- ================================================================
+     SECTION-06-GELOOFWAARDIGHEID
+     ================================================================ -->
+<section class="credibility sec" aria-label="Geloofwaardigheid en differentiatie">
+  <div class="wrap">
+
+    <div class="fi">
+      <span class="lbl">Sectie 06 &mdash; Methodologie</span>
+      <h2>Waarom deze aanpak werkt &mdash; en waarom anderen hem missen.</h2>
+      <p class="intro">
+        De meeste vastgoedcopy mislukken op hetzelfde punt: ze beschrijven het pand in plaats van de koper te
+        overtuigen. Onze methode werkt anders.
+      </p>
+    </div>
+
+    <div class="diff fi d1">
+      <div class="diff-icon">🔍</div>
+      <div>
+        <h4>Koopbeslissingen worden genomen op specificiteit, niet op adjectieven.</h4>
+        <p>
+          Een koper die &ldquo;riante leefruimte&rdquo; leest, gelooft het niet. Een koper die &ldquo;51&nbsp;m² woonkamer
+          met directe toegang tot een west-georiënteerde tuin van 106&nbsp;m²&rdquo; leest, visualiseert het onmiddellijk.
+          Elk woord in onze copy staat er omdat het een beslissing vooruithelpt &mdash; niet omdat het de listing langer maakt.
+        </p>
+      </div>
+    </div>
+
+    <div class="diff fi d2">
+      <div class="diff-icon">📐</div>
+      <div>
+        <h4>De energieprestatie staat niet in het verkoopgesprek &mdash; ze staat al in de copy.</h4>
+        <p>
+          In een markt waar de helft van de appartementen gebouwd vóór 2010 een EPC C of D heeft, is uw EPC&nbsp;B
+          een sterke differentiator. Maar enkel als die vroeg gecommuniceerd wordt &mdash; niet als bijlage in de
+          technische kenmerken. Wij brengen het sleutelargument naar voren, precies op het moment dat de koper
+          zijn eerste filter instelt.
+        </p>
+      </div>
+    </div>
+
+    <div class="diff fi d3">
+      <div class="diff-icon">🎯</div>
+      <div>
+        <h4>Eén duidelijke differentiator: wij schrijven voor de koper, niet voor het sjabloon.</h4>
+        <p>
+          Generieke templates, keywordvulling, copy die op elk pand toepasbaar is &mdash; dat is wat de meeste
+          kantoren produceren. Wij schrijven voor het beslissingsmoment van één specifieke koper die door Immoweb
+          scrollt en in drie seconden beslist of hij de pagina bewaart of sluit.
+          Die drie seconden zijn alles wat telt.
+        </p>
+      </div>
+    </div>
+
+
+
+  </div>
+</section><!-- /SECTION-06-GELOOFWAARDIGHEID -->
+
+
+<!-- ================================================================
+     SECTION-07-MECHANISME
+     ================================================================ -->
+<section class="mechanisme sec" aria-label="Hoe de samenwerking werkt">
+  <div class="wrap">
+
+    <div class="fi">
+      <span class="lbl">Sectie 07 &mdash; Het proces</span>
+      <h2>Drie stappen. Geen complexiteit.</h2>
+      <p class="intro">
+        Zo verloopt de samenwerking &mdash; transparant, snel en zonder verborgen stappen.
+      </p>
+    </div>
+
+    <div class="steps">
+
+      <div class="step fi d1">
+        <div class="step-num">1</div>
+        <h4>Analyse</h4>
+        <p>
+          Gradi analyseert uw volledig portfolio van advertenties en identificeert exact welke elementen
+          kopers doen afhaken &mdash; vóór het eerste bezoek plaatsvindt.
+        </p>
+        <div class="step-res">→ U weet precies wat er verbeterd moet worden.</div>
+      </div>
+
+      <div class="step fi d2">
+        <div class="step-num">2</div>
+        <h4>Optimalisatie</h4>
+        <p>
+          Elke advertentie wordt herschreven op basis van bewezen conversiepatternen: kopij, structuur en
+          sleutelinformatie op de juiste positie op het juiste moment.
+        </p>
+        <div class="step-res">→ Elke listing trekt de juiste kandidaat aan.</div>
+      </div>
+
+      <div class="step fi d3">
+        <div class="step-num">3</div>
+        <h4>Resultaat</h4>
+        <p>
+          U besteedt uw tijd uitsluitend aan gekwalificeerde prospects. Geen uren meer verspild aan
+          vrijblijvende bezoekers. Uw agenda werkt voor u, niet andersom.
+        </p>
+        <div class="step-res">→ Meer mandaten. Minder ruis.</div>
+      </div>
+
+    </div>
+  </div>
+</section><!-- /SECTION-07-MECHANISME -->
+
+
+<!-- ================================================================
+     SECTION-08-CTA
+     ================================================================ -->
+<section class="cta-sec" aria-label="Definitieve call-to-action">
+  <div class="cta-inner">
+
+    <div class="fi">
+      <span class="lbl" style="color:rgba(255,255,255,0.40);">Sectie 08 &mdash; De volgende stap</span>
+      <h2>U heeft nu een advertentie die converteert.</h2>
+    </div>
+
+    <div class="delivered fi d1">
+      Wat u zojuist ontvangen hebt, is een volledig herschreven listing &mdash; gratis, zonder enige tegenprestatie.
+      Dit is de kwaliteit die u kunt verwachten als standaard, niet als uitzondering.
+    </div>
+
+    <p class="offer-txt fi d2">
+      Hier is wat we samen kunnen bouwen: een systeem dat al uw advertenties en sociale media systematisch
+      optimaliseert om meer mandaten aan te trekken &mdash; en uw leadfiltering automatiseert zodat u uw tijd
+      uitsluitend besteedt aan serieuze, gekwalificeerde prospects. Geen uren meer verspild aan vrijblijvende bezoekers.
+    </p>
+
+    <a href="mailto:gradi@homieuxmedia.com" class="btn fi d3">Mijn behoeften bespreken met Gradi</a>
+
+    <p class="urgency fi d4">
+      <strong>Elke advertentie die niet geoptimaliseerd blijft, is een mandaat dat naar een concurrent gaat.</strong><br />
+      Filip, uw pand op de Aarschotsesteenweg bewijst dat u goed vastgoed aanbiedt.
+      Laat de copy dat bewijs nu ook leveren.
+    </p>
+
+  </div>
+</section><!-- /SECTION-08-CTA -->
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2026 Homieux Media &nbsp;·&nbsp; gradi@homieuxmedia.com &nbsp;·&nbsp; Vertrouwelijk — uitsluitend bestemd voor Filip</p>
+</footer>
+
+
+<script>
+  /* ================================================================
+     SCROLL-TRIGGERED ENTRANCE ANIMATIONS
+     Vanilla JS — geen externe afhankelijkheden
+     ================================================================ */
+  (function () {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('on');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.10 });
+
+    /* Hero elements: onmiddellijk na load zichtbaar maken */
+    document.querySelectorAll('.hero .fi').forEach(function (el, i) {
+      setTimeout(function () { el.classList.add('on'); }, 120 + i * 120);
+    });
+
+    /* Alle overige elementen via IntersectionObserver */
+    document.querySelectorAll('.fi:not(.hero .fi)').forEach(function (el) {
+      io.observe(el);
+    });
+  }());
+</script>
+
 </body>
 </html>
